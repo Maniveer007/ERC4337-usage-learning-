@@ -8,6 +8,7 @@ contract Paymaster is IPaymaster{
     function validatePaymasterUserOp(UserOperation calldata userOp, bytes32 userOpHash, uint256 maxCost)
         external returns (bytes memory context, uint256 validationData){
 
+        
             context = "";
             validationData = 0;
     }

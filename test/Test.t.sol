@@ -22,7 +22,7 @@ contract CounterTest is Test {
         ownerPrivateKey = 0x1234567890123456789012345678901234567890123456789012345678901234;
         owner = vm.addr(ownerPrivateKey);
         paymaster = new Paymaster();
-        vm.deal(address(paymaster), 10000 ether);
+        vm.deal(address(paymaster), 100 ether);
     }
 
     function test_paymaster() public {
@@ -61,8 +61,10 @@ contract CounterTest is Test {
         UserOperation[] memory userOps = new UserOperation[](1);
         userOps[0] = userOp;
 
+        vm.startPrank(address(paymaster));
         entryPoint.handleOps(userOps, payable(address(1)));
         console.log(UserAccount(sender).count());
+        console.log("balance of paymaster:", entryPoint.balanceOf(address(paymaster)));
 
         userOp.nonce = entryPoint.getNonce(address(sender), 0);
 
